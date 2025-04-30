@@ -17,7 +17,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- SIDEBAR --- 
 # --- SIDEBAR ---
 with st.sidebar:
     # Logo and Branding
