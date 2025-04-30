@@ -18,100 +18,56 @@ st.set_page_config(
 )
 
 # --- SIDEBAR --- 
-
+# --- SIDEBAR ---
 with st.sidebar:
-    # Coffee Shop Branding
+    # Logo and Branding
+    st.image("logo.png", use_container_width=True)
     st.markdown("""
-    <style>
-    .sidebar .sidebar-content {
-        background-image: linear-gradient(to bottom, #3E2723, #5D4037);
-        color: white;
-    }
-    .sidebar .sidebar-content .block-container {
-        padding-top: 2rem;
-    }
-    .sidebar .sidebar-content .stRadio div[role="radiogroup"] {
-        background-color: rgba(255,255,255,0.1);
-        border-radius: 10px;
-        padding: 5px;
-    }
-    .sidebar .sidebar-content .stRadio div[role="radiogroup"] label {
-        color: white;
-        padding: 8px;
-    }
-    .sidebar-logo {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-    .divider {
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-        margin: 1rem 0;
-    }
-    .contact-info {
-        font-size: 0.9rem;
-        opacity: 0.9;
-        margin-top: 2rem;
-        text-align: center;
-    }
-    .brand-name {
-        color: #3E2723 !important;
-        font-size: 1.8rem !important;
-        font-weight: 700;
-        margin: 10px 0 5px 0;
-        text-shadow: #3E2723;
-    }
-    .brand-tagline {
-        color: #D7CCC8 !important;
-        font-size: 1rem !important;
-        margin-bottom: 20px;
-    }
-    .social-icons {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        margin-top: 1rem;
-    }
-    </style>
+    <h2 style='color: #3E2723; margin-bottom: 0;'>Borcelle</h2>
+    <p style='color: #6D4C41; margin-top: 0; font-style: italic;'>Artisan Coffee Since 2010</p>
     """, unsafe_allow_html=True)
-
-    # Logo and Brand Name - Updated with larger logo and better typography
-    st.markdown('<div class="sidebar-logo">', unsafe_allow_html=True)
-    st.image("logo.png", width=220)  # Increased from 120 to 180
-    st.markdown('<h1 class="brand-name">Brew & Bean</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="brand-tagline">Artisan Coffee Since 2010</p>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
+    
+    # Divider
+    st.markdown("<hr style='border: 0.5px solid #D7CCC8; margin: 1.5rem 0;'>", unsafe_allow_html=True)
+    
     # Navigation
-    st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
     selected_page = st.radio(
         "MENU",
         options=["Sales Dashboard", "About"],
         index=0,
         label_visibility="collapsed"
     )
-
-    # Contact Info - Centered and improved
-    st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
+    
+    # Divider
+    st.markdown("<hr style='border: 0.5px solid #D7CCC8; margin: 1.5rem 0;'>", unsafe_allow_html=True)
+    
+    # Professional Contact Info (Left-Aligned)
     st.markdown("""
-    <div class="contact-info">
-        <p style="margin-bottom: 12px;">📍 123 Coffee Street</p>
-        <p style="margin-bottom: 12px;">Portland, OR 97201</p>
-        <p style="margin-bottom: 12px;">☎ (503) 555-0199</p>
-        <p style="margin-bottom: 12px;">🕒 Mon-Fri: 6am-8pm</p>
-        <p>🕒 Sat-Sun: 7am-9pm</p>
+    <div style='font-family: "sans-serif" , Arial; color: #3E2723;'>
+        <p style='margin-bottom: 12px;'>
+            <span style='color: #5D4037;'>📍</span>123 Coffee Street<br>
+            <span style='margin-left: 24px;'>Portland, OR 97201</span>
+        </p>
+        <p style='margin-bottom: 12px;'>
+            <span style='color: #5D4037;'>☎ </span>(503) 555-0199
+        </p>
+        <p style='margin-bottom: 8px;'>
+            <span style='color: #5D4037;'>🕒 </span>Mon-Fri: 6am-8pm
+        </p>
+        <p>
+            <span style='margin-left: 24px;'>Sat-Sun: 7am-9pm</span>
+        </p>
     </div>
     """, unsafe_allow_html=True)
-
-    # Social Media - Updated with better centering
+    
+    # Social Media Icons (Left-Aligned)
     st.markdown("""
-    <div class="social-icons">
-        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24"></a>
-        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" width="24"></a>
-        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384053.png" width="24"></a>
+    <div style='margin-top: 20px; text-align: left;'>
+        <a href="#" style='margin-right: 12px;'><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22"></a>
+        <a href="#" style='margin-right: 12px;'><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" width="22"></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384053.png" width="22"></a>
     </div>
     """, unsafe_allow_html=True)
-
-
 
 # --- LOAD DATA ---
 @st.cache_data(ttl=3600)  # Cache data for 1 hour
@@ -144,7 +100,7 @@ if selected_page == "About":
         st.image("jason-leung-poI7DelFiVA-unsplash.jpg", use_container_width=True, caption="Our charming cafe exterior")
     with col2:
         st.markdown("""
-        ## ☕ The Art of Coffee Since 2010
+        ## The Art of Coffee Since 2010
         
         We're passionate about crafting the perfect cup of coffee while creating 
         a warm, welcoming space for our community. Our beans are ethically sourced 
