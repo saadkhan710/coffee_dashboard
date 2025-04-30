@@ -63,9 +63,9 @@ with st.sidebar:
     # Social Media Icons (Left-Aligned)
     st.markdown("""
     <div style='margin-top: 20px; text-align: left;'>
-        <a href="#" style='margin-right: 12px;'><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22"></a>
-        <a href="#" style='margin-right: 12px;'><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" width="22"></a>
-        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384053.png" width="22"></a>
+        <a href="#" style='margin-left: 12px'><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22"></a>
+        <a href="#" style='margin-left: 12px'><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" width="22"></a>
+        <a href="#" style='margin-left: 12px'><img src="https://cdn-icons-png.flaticon.com/512/1384/1384053.png" width="22"></a>
     </div>
     """, unsafe_allow_html=True)
 
@@ -210,7 +210,7 @@ if selected_page == "About":
         """, unsafe_allow_html=True)
     
     # Team Section
-    st.markdown("---")
+ 
     st.header("Meet Our Team")
     
     col1, col2, col3 = st.columns(3)
@@ -218,31 +218,31 @@ if selected_page == "About":
     with col1:
         with st.container(border=True):
             st.image("Owner.jpeg", use_container_width=True)
-            st.subheader("Sarah Johnson")
+            st.subheader("Saad Khan")
             st.markdown("""
             **Co-Founder & CEO**  
             Coffee connoisseur with 15+ years experience  
-            ✉️ sarah@cafe.com
+            ✉️ saad_khan@cafe.com
             """)
     
     with col2:
         with st.container(border=True):
-            st.image("danny-ocean-ehUYU820lcA-unsplash.jpg", use_container_width=True)
-            st.subheader("Michael Chen")
+            st.image("oguz-yagiz-kara-MZf0mI14RI0-unsplash.jpg", use_container_width=True)
+            st.subheader("Yasir raza")
             st.markdown("""
             **Co-Founder & Head Roaster**  
             Master roaster and barista champion  
-            ✉️ michael@cafe.com
+            ✉️ yasir_raza@cafe.com
             """)
     
     with col3:
         with st.container(border=True):
-            st.image("jason-leung-poI7DelFiVA-unsplash.jpg", use_container_width=True)
-            st.subheader("Emma Rodriguez")
+            st.image("vicky-hladynets-C8Ta0gwPbQg-unsplash.jpg", use_container_width=True)
+            st.subheader("Vicky Hladyent")
             st.markdown("""
             **Operations Manager**  
             Keeps everything running smoothly  
-            ✉️ emma@cafe.com
+            ✉️ VickyHladyent@cafe.com
             """)
     
     # Values Section
@@ -253,10 +253,9 @@ if selected_page == "About":
         {"icon": "🌱", "title": "Sustainability", "desc": "Ethical sourcing, composting, and recycling programs."},
         {"icon": "❤️", "title": "Community", "desc": "Supporting local artists and schools."},
         {"icon": "✨", "title": "Quality", "desc": "Never compromising from bean to cup."},
-        {"icon": "🌎", "title": "Global Perspective", "desc": "Celebrating coffee traditions worldwide."}
     ]
     
-    cols = st.columns(4)
+    cols = st.columns(3)
     for i, value in enumerate(values):
         with cols[i]:
             with st.container(border=True, height=150):  # Reduced height
@@ -269,7 +268,7 @@ if selected_page == "About":
     
     col1, col2 = st.columns(2)
     with col1:
-        with st.container(border=True):
+        with st.container(border=True, height=200):
             st.markdown("""
             **Main Location**  
             📍 123 Coffee Street  
@@ -281,7 +280,7 @@ if selected_page == "About":
             """)
     
     with col2:
-        with st.container(border=True):
+        with st.container(border=True , height=200):
             st.markdown("""
             **Contact Us**  
             📞 (503) 555-0199  
