@@ -68,13 +68,13 @@ pip install streamlit pandas plotly prophet pillow
 
 ## Launch the dashboard
 ```bash
-streamlit run dashboard.py
+streamlit run app.py
 
 ```
 ## Project Structure
 ```bash
-borcelle-dashboard/
-├── dashboard.py             # Main application
+coffee_dashboard/
+├── app.py             # Main application
 ├── requirements.txt         # Dependencies
 ├── cleaned_coffee_shop_data.csv  # Sales data
 └── assets/                  # Additional images (create this folder)
