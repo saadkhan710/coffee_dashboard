@@ -20,7 +20,7 @@ st.set_page_config(
 # --- SIDEBAR ---
 with st.sidebar:
     # Logo and Branding
-    st.image("logo.png", use_container_width=True)
+    st.image("assets/logo.png", use_container_width=True)
     st.markdown("""
     <h2 style='color: #3E2723; margin-bottom: 0;'>Borcelle</h2>
     <p style='color: #6D4C41; margin-top: 0; font-style: italic;'>Artisan Coffee Since 2010</p>
@@ -96,7 +96,7 @@ if selected_page == "About":
     # Header with image
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.image("jason-leung-poI7DelFiVA-unsplash.jpg", use_container_width=True, caption="Our charming cafe exterior")
+        st.image("assets/jason-leung-poI7DelFiVA-unsplash.jpg", use_container_width=True, caption="Our charming cafe exterior")
     with col2:
         st.markdown("""
         ## The Art of Coffee Since 2010
@@ -216,7 +216,7 @@ if selected_page == "About":
     
     with col1:
         with st.container(border=True):
-            st.image("Owner.jpeg", use_container_width=True)
+            st.image("assets/Owner.jpeg", use_container_width=True)
             st.subheader("Saad Khan")
             st.markdown("""
             **Co-Founder & CEO**  
@@ -226,7 +226,7 @@ if selected_page == "About":
     
     with col2:
         with st.container(border=True):
-            st.image("oguz-yagiz-kara-MZf0mI14RI0-unsplash.jpg", use_container_width=True)
+            st.image("assets/oguz-yagiz-kara-MZf0mI14RI0-unsplash.jpg", use_container_width=True)
             st.subheader("Yasir raza")
             st.markdown("""
             **Co-Founder & Head Roaster**  
@@ -236,7 +236,7 @@ if selected_page == "About":
     
     with col3:
         with st.container(border=True):
-            st.image("vicky-hladynets-C8Ta0gwPbQg-unsplash.jpg", use_container_width=True)
+            st.image("assets/vicky-hladynets-C8Ta0gwPbQg-unsplash.jpg", use_container_width=True)
             st.subheader("Vicky Hladyent")
             st.markdown("""
             **Operations Manager**  
