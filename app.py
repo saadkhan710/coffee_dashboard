@@ -1191,3 +1191,86 @@ elif selected_page == "Sales Dashboard":
                 value=f"€{q75:.2f}+",
                 delta="Top 25% of transactions"
             )
+            
+# --- INTERACTIVE DATA TABLE SECTION ---
+
+st.markdown("---")
+st.subheader("🔍 Transaction Data Explorer")
+st.caption("Explore and filter raw transaction data. Click column headers to sort.")
+
+
+# Create a copy of the filtered dataframe to avoid modifying the original
+display_df = filtered_df.copy()
+# Format datetime columns for better display:
+
+display_df['transaction_date'] = display_df['transaction_date'].dt.strftime('%Y-%m-%d')
+display_df['transaction_time'] = display_df['transaction_time'].astype(str)
+
+# --- FILTER CONTROLS ---
+
+with st.container(border=True):
+    # 3-column layout for filters
+    col1, col2, col3 = st.columns(3)
+    
+    # COLUMN 1: Transaction ID Filter (Single Select)
+    with col1:
+        transaction_filter = st.selectbox(
+            "Transaction ID",  # Label
+            options=['All'] + sorted(display_df['transaction_id'].unique()),   # 'All' + sorted unique IDs
+            index=0,                                                           # Default to 'All'
+            help="Filter by specific transaction ID"                           # Help tooltip
+        )
+    
+    # COLUMN 2: Product Filter (Multi-Select)
+    with col2:
+        product_filter = st.multiselect(
+            "Product",
+            options=sorted(display_df['product_detail'].unique()),             # Alphabetically sorted products
+            default=None,                                                      # No default selection
+            help="Filter by specific products"                                 # Help tooltip
+        )
+    
+    # COLUMN 3: Date Filter (Multi-Select)
+    with col3:
+        date_filter = st.multiselect(
+            "Date",
+            options=sorted(display_df['transaction_date'].unique()),  # Sorted unique dates
+            default=None,  # No default selection
+            help="Filter by specific dates"  # Help tooltip
+        )
+
+# --- APPLY FILTERS ---
+# Transaction ID filter (only if specific ID is selected)
+if transaction_filter and transaction_filter != 'All':
+    display_df = display_df[display_df['transaction_id'] == transaction_filter]
+    
+# Product filter (only if products are selected)
+if product_filter:  # Checks for non-empty list
+    display_df = display_df[display_df['product_detail'].isin(product_filter)]
+    
+# Date filter (only if dates are selected)
+if date_filter:
+    display_df = display_df[display_df['transaction_date'].isin(date_filter)]
+
+# --- DISPLAY RESULTS ---
+
+st.dataframe(
+    display_df,
+    column_config={
+                                                        # Human-readable column headers with formatting:
+        "transaction_id": "Transaction ID",
+        "transaction_date": "Date",
+        "transaction_time": "Time",
+        "product_category": "Category",
+        "product_detail": "Product",
+        "unit_price": st.column_config.NumberColumn("Price", format="€%.2f"),  # Currency formatting
+        "transaction_qty": "Qty",                                              # Abbreviated Quantity
+        "total_sales": st.column_config.NumberColumn("Total", format="€%.2f")  # Currency formatting
+    },
+    hide_index=True,                                                           # Hide pandas default index
+    use_container_width=True,                                                  # Responsive width
+    height=600                                                                 # Fixed height with scroll
+)
+
+                                                                               # Footer with attribution
+st.caption("Dashboard developed by Saad Khan | Data updated daily")
