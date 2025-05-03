@@ -913,34 +913,42 @@ elif selected_page == "Sales Dashboard":
         else:
             ts_data = temp_df.resample(freq_map[time_group])['transaction_id'].count()
         
+        # Convert dates to month names for monthly data
+        if time_group == "Monthly":
+            x_values = ts_data.index.strftime('%b %Y')
+            hover_format = "%{x}<br>" + f"{metric}: %{{y:,}}<extra></extra>"
+        else:
+            x_values = ts_data.index
+            hover_format = f"<b>%{{x|%b %d}}</b><br>{metric}: %{{y:,}}<extra></extra>" if time_group == "Daily" else f"<b>%{{x|%b %Y}}</b><br>{metric}: %{{y:,}}<extra></extra>"
+        
         # Create dual-axis chart
         fig = go.Figure()
         
         # Main line/area trace
         if time_group == "Daily":
             fig.add_trace(go.Scatter(
-                x=ts_data.index,
+                x=x_values,
                 y=ts_data.values,
                 fill='tozeroy',
                 mode='lines',
                 name=metric,
                 line=dict(color='#4B9CD3', width=2),
-                hovertemplate=f"<b>%{{x|%b %d}}</b><br>{metric}: %{{y:,}}<extra></extra>"
+                hovertemplate=hover_format
             ))
         else:
             fig.add_trace(go.Bar(
-                x=ts_data.index,
+                x=x_values,
                 y=ts_data.values,
                 name=metric,
                 marker_color='#4B9CD3',
-                hovertemplate=f"<b>%{{x|%b %Y}}</b><br>{metric}: %{{y:,}}<extra></extra>"
+                hovertemplate=hover_format
             ))
         
         # 7-day moving average if showing daily data
         if time_group == "Daily":
             moving_avg = ts_data.rolling(7).mean()
             fig.add_trace(go.Scatter(
-                x=ts_data.index,
+                x=x_values,
                 y=moving_avg.values,
                 mode='lines',
                 name='7-Day Avg',
