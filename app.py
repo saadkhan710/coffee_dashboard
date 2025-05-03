@@ -11,16 +11,16 @@ import plotly.graph_objects as go
 
 # --- PAGE CONFIG ---
 st.set_page_config(
-    page_title="Coffee Shop Analytics Dashboard",
-    page_icon="☕",
-    layout="wide",
+    page_title="Coffee Shop Analytics Dashboard",    # Adding label 
+    page_icon="☕",                                 # Styling 
+    layout="wide",                                   # Setting up the wide page layout 
     initial_sidebar_state="expanded"
 )
 
 # --- SIDEBAR ---
 with st.sidebar:
     # Logo and Branding
-    st.image("assets/logo.png", use_container_width=True)
+    st.image("assets/logo.png", use_container_width=True)         # adding cafe logo for sidebar
     st.markdown("""
     <h2 style='color: #3E2723; margin-bottom: 0;'>Borcelle</h2>
     <p style='color: #6D4C41; margin-top: 0; font-style: italic;'>Artisan Coffee Since 2010</p>
@@ -297,42 +297,40 @@ if selected_page == "About":
     }), zoom=14, use_container_width=True)
     
     st.markdown("---")
-    st.caption("© 2023 Coffee Shop Name. All rights reserved.")
+    st.caption("© 2023 Borcelle. All rights reserved.")
 
 
 # --- SALES DASHBOARD ---
 elif selected_page == "Sales Dashboard":
-    # Dashboard Header
+    # Header section
     st.title("☕ Coffee Shop Performance Dashboard")
-    st.caption("""
-        Real-time analytics and insights for your coffee shop business. 
-        Last updated: {:%Y-%m-%d %H:%M}
-    """.format(pd.Timestamp.now()))
+    st.caption(f"Real-time analytics and insights. Last updated: {pd.Timestamp.now():%Y-%m-%d %H:%M}")
     
+    # Quick filters expander
     with st.expander("🔍 Quick Filters", expanded=False):
         col1, col2 = st.columns(2)
         with col1:
+            # Location filter
             locations = st.multiselect(
                 "Select Locations",
                 options=filtered_df['store_location'].unique(),
-                default=filtered_df['store_location'].unique(),
-                help="Filter by store locations"
+                default=filtered_df['store_location'].unique()
             )
         with col2:
+            # Category filter
             categories = st.multiselect(
                 "Select Categories",
                 options=filtered_df['product_category'].unique(),
-                default=filtered_df['product_category'].unique(),
-                help="Filter by product categories"
+                default=filtered_df['product_category'].unique()
             )
         
-        # Apply filters
+        # Apply selected filters
         filtered_df = filtered_df[
             filtered_df['store_location'].isin(locations) &
             filtered_df['product_category'].isin(categories)
         ]
     
-    st.markdown("---")
+    st.markdown("---")  # Divider
     
     # --- METRICS ---
     st.subheader("📈 Performance Overview")
@@ -1194,83 +1192,83 @@ elif selected_page == "Sales Dashboard":
             
 # --- INTERACTIVE DATA TABLE SECTION ---
 
-st.markdown("---")
-st.subheader("🔍 Transaction Data Explorer")
-st.caption("Explore and filter raw transaction data. Click column headers to sort.")
+    st.markdown("---")
+    st.subheader("🔍 Transaction Data Explorer")
+    st.caption("Explore and filter raw transaction data. Click column headers to sort.")
 
 
-# Create a copy of the filtered dataframe to avoid modifying the original
-display_df = filtered_df.copy()
-# Format datetime columns for better display:
+    # Create a copy of the filtered dataframe to avoid modifying the original
+    display_df = filtered_df.copy()
+    # Format datetime columns for better display:
 
-display_df['transaction_date'] = display_df['transaction_date'].dt.strftime('%Y-%m-%d')
-display_df['transaction_time'] = display_df['transaction_time'].astype(str)
+    display_df['transaction_date'] = display_df['transaction_date'].dt.strftime('%Y-%m-%d')
+    display_df['transaction_time'] = display_df['transaction_time'].astype(str)
 
-# --- FILTER CONTROLS ---
+    # --- FILTER CONTROLS ---
 
-with st.container(border=True):
-    # 3-column layout for filters
-    col1, col2, col3 = st.columns(3)
-    
-    # COLUMN 1: Transaction ID Filter (Single Select)
-    with col1:
-        transaction_filter = st.selectbox(
-            "Transaction ID",  # Label
-            options=['All'] + sorted(display_df['transaction_id'].unique()),   # 'All' + sorted unique IDs
-            index=0,                                                           # Default to 'All'
-            help="Filter by specific transaction ID"                           # Help tooltip
-        )
-    
-    # COLUMN 2: Product Filter (Multi-Select)
-    with col2:
-        product_filter = st.multiselect(
-            "Product",
-            options=sorted(display_df['product_detail'].unique()),             # Alphabetically sorted products
-            default=None,                                                      # No default selection
-            help="Filter by specific products"                                 # Help tooltip
-        )
-    
-    # COLUMN 3: Date Filter (Multi-Select)
-    with col3:
-        date_filter = st.multiselect(
-            "Date",
-            options=sorted(display_df['transaction_date'].unique()),  # Sorted unique dates
-            default=None,  # No default selection
-            help="Filter by specific dates"  # Help tooltip
-        )
+    with st.container(border=True):
+        # 3-column layout for filters
+        col1, col2, col3 = st.columns(3)
 
-# --- APPLY FILTERS ---
-# Transaction ID filter (only if specific ID is selected)
-if transaction_filter and transaction_filter != 'All':
-    display_df = display_df[display_df['transaction_id'] == transaction_filter]
-    
-# Product filter (only if products are selected)
-if product_filter:  # Checks for non-empty list
-    display_df = display_df[display_df['product_detail'].isin(product_filter)]
-    
-# Date filter (only if dates are selected)
-if date_filter:
-    display_df = display_df[display_df['transaction_date'].isin(date_filter)]
+        # COLUMN 1: Transaction ID Filter (Single Select)
+        with col1:
+            transaction_filter = st.selectbox(
+                "Transaction ID",  # Label
+                options=['All'] + sorted(display_df['transaction_id'].unique()),   # 'All' + sorted unique IDs
+                index=0,                                                           # Default to 'All'
+                help="Filter by specific transaction ID"                           # Help tooltip
+            )
 
-# --- DISPLAY RESULTS ---
+        # COLUMN 2: Product Filter (Multi-Select)
+        with col2:
+            product_filter = st.multiselect(
+                "Product",
+                options=sorted(display_df['product_detail'].unique()),             # Alphabetically sorted products
+                default=None,                                                      # No default selection
+                help="Filter by specific products"                                 # Help tooltip
+            )
 
-st.dataframe(
-    display_df,
-    column_config={
-                                                        # Human-readable column headers with formatting:
-        "transaction_id": "Transaction ID",
-        "transaction_date": "Date",
-        "transaction_time": "Time",
-        "product_category": "Category",
-        "product_detail": "Product",
-        "unit_price": st.column_config.NumberColumn("Price", format="€%.2f"),  # Currency formatting
-        "transaction_qty": "Qty",                                              # Abbreviated Quantity
-        "total_sales": st.column_config.NumberColumn("Total", format="€%.2f")  # Currency formatting
-    },
-    hide_index=True,                                                           # Hide pandas default index
-    use_container_width=True,                                                  # Responsive width
-    height=600                                                                 # Fixed height with scroll
-)
+        # COLUMN 3: Date Filter (Multi-Select)
+        with col3:
+            date_filter = st.multiselect(
+                "Date",
+                options=sorted(display_df['transaction_date'].unique()),  # Sorted unique dates
+                default=None,  # No default selection
+                help="Filter by specific dates"  # Help tooltip
+            )
 
-                                                                               # Footer with attribution
-st.caption("Dashboard developed by Saad Khan | Data updated daily")
+    # --- APPLY FILTERS ---
+    # Transaction ID filter (only if specific ID is selected)
+    if transaction_filter and transaction_filter != 'All':
+        display_df = display_df[display_df['transaction_id'] == transaction_filter]
+
+    # Product filter (only if products are selected)
+    if product_filter:  # Checks for non-empty list
+        display_df = display_df[display_df['product_detail'].isin(product_filter)]
+
+    # Date filter (only if dates are selected)
+    if date_filter:
+        display_df = display_df[display_df['transaction_date'].isin(date_filter)]
+
+    # --- DISPLAY RESULTS ---
+
+    st.dataframe(
+        display_df,
+        column_config={
+                                                            # Human-readable column headers with formatting:
+            "transaction_id": "Transaction ID",
+            "transaction_date": "Date",
+            "transaction_time": "Time",
+            "product_category": "Category",
+            "product_detail": "Product",
+            "unit_price": st.column_config.NumberColumn("Price", format="€%.2f"),  # Currency formatting
+            "transaction_qty": "Qty",                                              # Abbreviated Quantity
+            "total_sales": st.column_config.NumberColumn("Total", format="€%.2f")  # Currency formatting
+        },
+        hide_index=True,                                                           # Hide pandas default index
+        use_container_width=True,                                                  # Responsive width
+        height=600                                                                 # Fixed height with scroll
+    )
+
+                                                                                   # Footer with attribution
+    st.caption("Dashboard developed by Saad Khan | Data updated daily")
