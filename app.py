@@ -73,7 +73,7 @@ with st.sidebar:
 def load_data():
     try:
         df = pd.read_csv(
-            "cleaned_coffee_shop_data.csv",
+            "Cleaned_Coffee_Shop_Sales_V2.csv",
             parse_dates=['transaction_date'],
             date_parser=lambda x: pd.to_datetime(x, format='mixed')
         )
